@@ -1,9 +1,28 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var cloudinary = require('cloudinary');
+var fs = require('fs');
+var multiparty = require('connect-multiparty');
+var multipartyMiddle = multiparty({
+    uploadDir: './uploads'
+});
 
-router.post('/save', function(req, res){
-    res.send(req.body)
+cloudinary.config({
+    cloud_name: 'do5zrocew',
+    api_key: '176984263871615',
+    api_secret: '-4H2VvXsGsXn3O8zPU1HenjCZm8'
+});
+
+router.post('/save', multipartyMiddle, function(req, res){
+    var file = req.files.file;
+    console.log(file.name);
+    console.log(file.type);
+    console.log(file);
+    cloudinary.uploader.upload(file.path, function(result){
+        console.log(result)
+    });
+    res.send(file.path);
 });
 
 router.get('/get-all', function(req, res){

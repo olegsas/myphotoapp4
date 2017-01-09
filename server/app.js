@@ -46,7 +46,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // routes
 app.use('/auth', authRoutes);
-app.use('/user/', userRoutes);
+app.use('/user', userRoutes);
 app.use('/pictures', pictureRoutes);
 
 app.get('/', function(req, res) {
